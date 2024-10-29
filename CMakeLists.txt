@@ -4,8 +4,10 @@ project("DBusPermissionManager")
 
 set(SOURCE_DIR "./src")
 
-add_executable(DBusPermissionManager "${SOURCE_DIR}/main.cpp")
+add_subdirectory("./thirdparty/SQLiteCpp")
+add_subdirectory("./thirdparty/sdbus-cpp")
 
-target_link_libraries(DBusPermissionManager PRIVATE "/home/oleg0/projects/DBusPermissionManager/lib/libsdbus-c++.so")
 
-target_include_directories(DBusPermissionManager PUBLIC "./include")
+add_executable(DBusPermissionManager "${SOURCE_DIR}/main.cpp" "${SOURCE_DIR}/db.cpp" "${SOURCE_DIR}/db.h")
+
+target_link_libraries(DBusPermissionManager PRIVATE sdbus-c++ SQLiteCpp sqlite3 pthread dl)
