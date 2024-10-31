@@ -2,15 +2,15 @@
 #define DB_H
 
 #include <SQLiteCpp/SQLiteCpp.h>
-
 #include <vector>
 #include <memory>
 #include <string>
+#include <filesystem>
+
+#include "common.h"
 
 namespace db
 {
-
-    class Database;
 
     const std::string DB_FILENAME = "db.db";
 
@@ -18,20 +18,23 @@ namespace db
     {
     public:
         static Database &Instance();
-        SQLite::Statement execute(const std::string &request);
 
-    protected:
+        void initDB();
+        void setPermission(const std::string &path, const int32_t &permissionEnumCod);
+        bool hasPermission(const std::string &path, const int32_t &permissionEnumCod);
+        std::optional<int> getFileId(const std::string &path);
+        int addFile(const std::string &path);
+
+    private:
         explicit Database();
         ~Database();
         Database(const Database &) = delete;
         Database &operator=(const Database &) = delete;
 
-        friend class DatabaseDestroyer;
-
-    private:
         SQLite::Database mDb;
         static Database *p_instance;
     };
+
 }
 
 #endif
