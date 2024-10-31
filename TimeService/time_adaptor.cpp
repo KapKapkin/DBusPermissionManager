@@ -39,8 +39,7 @@ uint64_t TimeAdaptor::GetSystemTime()
 
     if (CheckPermission(path_to_exe))
     {
-        std::time_t timestump = std::time(nullptr);
-        return timestump;
+        return std::time(nullptr);
     }
     else
     {
@@ -50,17 +49,7 @@ uint64_t TimeAdaptor::GetSystemTime()
 
 bool TimeAdaptor::CheckPermission(std::string &path)
 {
-    PermissionsProxy permissions = [&]()
-    {
-        try
-        {
-            return PermissionsProxy(m_connection, permissions_service_name, permissions_path);
-        }
-        catch (...)
-        {
-            throw sdbus::Error(sdbus::Error::Name("com.system.time.ServiceError"), "com.system.permissions sevice is not active.");
-        }
-    }();
+    PermissionsProxy permissions = PermissionsProxy(m_connection, permissions_service_name, permissions_path);
 
     return permissions.CheckApplicationHasPermission(path, permissionCodeEnum::SystemTime);
 }
