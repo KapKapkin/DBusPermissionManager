@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     connection->requestName(permissionsServiceName);
 
     sdbus::ObjectPath objectPath{"/com/system/permissions"};
-    PermissionsAdapter adapter(*connection, objectPath);
+    PermissionsAdaptor adapter(*connection, objectPath);
 
     connection->enterEventLoop();
 

@@ -4,7 +4,7 @@
 #include <format>
 
 #include "permissions_adaptor.h"
-#include "permissions-server-glue.h"
+#include "permissions_server_glue.h"
 #include "common.h"
 #include "db.h"
 
@@ -14,24 +14,41 @@ std::string get_exe_for_pid(pid_t pid)
     return std::filesystem::canonical(path).string();
 }
 
-PermissionsAdapter::PermissionsAdapter(sdbus::IConnection &connection, sdbus::ObjectPath path) : AdaptorInterfaces(connection, std::move(path))
+PermissionsAdaptor::PermissionsAdaptor(sdbus::IConnection &connection, sdbus::ObjectPath path) : AdaptorInterfaces(connection, std::move(path))
 {
     registerAdaptor();
 }
 
-PermissionsAdapter::~PermissionsAdapter()
+PermissionsAdaptor::~PermissionsAdaptor()
 {
     unregisterAdaptor();
 }
 
-void PermissionsAdapter::RequestPermission(const int32_t &permissionEnumCode)
+void PermissionsAdaptor::RequestPermission(const int32_t &permissionEnumCode)
 {
     auto obj = getObject().getCurrentlyProcessedMessage();
-    std::string path_to_exe = get_exe_for_pid(obj.getCredsPid());
+    std::string path_to_exe;
+    try
+    {
+        path_to_exe = get_exe_for_pid(obj.getCredsPid());
+    }
+    catch (const std::filesystem::filesystem_error &e)
+    {
+        throw sdbus::Error(sdbus::Error::Name("file error"), "can't find file with given path or smth went wrong with the path.");
+    }
     db::Database::Instance().setPermission(path_to_exe, permissionEnumCode);
 }
-bool PermissionsAdapter::CheckApplicationHasPermission(const std::string &applicationExecPath, const int32_t &permissionEnumCode)
+bool PermissionsAdaptor::CheckApplicationHasPermission(const std::string &applicationExecPath, const int32_t &permissionEnumCode)
 {
-    std::string path_canonical = std::filesystem::weakly_canonical(applicationExecPath).string();
+    std::string path_canonical;
+    try
+    {
+        path_canonical = std::filesystem::canonical(applicationExecPath).string();
+    }
+    catch (const std::filesystem::filesystem_error &e)
+    {
+        throw sdbus::Error(sdbus::Error::Name("file error"), "can't find file with given path or smth went wrong with the path.");
+    }
+
     return db::Database::Instance().hasPermission(path_canonical, permissionEnumCode);
 }
