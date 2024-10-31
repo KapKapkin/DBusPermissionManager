@@ -15,3 +15,4 @@ target_link_libraries(DBusPermissionManager PRIVATE SQLiteCpp sqlite3 pthread dl
 
 
 
+
