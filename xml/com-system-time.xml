@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<node name="/com/system/time">
+    <interface name="com.system.time">
+        <method name="GetSystemTime">
+            <arg name="permissionEnumCode" type="t" direction="out"/>
+        </method>
+        
+    </interface>
+    
+</node>
