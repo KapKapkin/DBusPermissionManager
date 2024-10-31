@@ -5,12 +5,13 @@
 
 #include "permissions_client_glue.h"
 
-class PermissionsProxy final : public sdbus::ProxyInterfaces<com::system::permissions_proxy>
-{
+class PermissionsProxy final
+    : public sdbus::ProxyInterfaces<com::system::permissions_proxy> {
 public:
-    PermissionsProxy(sdbus::IConnection &connection, sdbus::ServiceName destination, sdbus::ObjectPath path);
+  PermissionsProxy(sdbus::IConnection &connection,
+                   sdbus::ServiceName destination, sdbus::ObjectPath path);
 
-    ~PermissionsProxy();
+  ~PermissionsProxy();
 };
 
 #endif

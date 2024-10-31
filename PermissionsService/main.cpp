@@ -1,20 +1,19 @@
 #include <sdbus-c++/sdbus-c++.h>
 
-#include "permissions_adaptor.h"
 #include "db.h"
+#include "permissions_adaptor.h"
 
-int main(int argc, char *argv[])
-{
-    db::Database::Instance().initDB();
-    auto connection = sdbus::createSessionBusConnection();
-    sdbus::ServiceName permissionsServiceName("com.system.permissions");
+int main() {
+  db::Database::Instance().initDB();
+  auto connection = sdbus::createSessionBusConnection();
+  sdbus::ServiceName permissionsServiceName("com.system.permissions");
+  sdbus::ObjectPath objectPath{"/com/system/permissions"};
 
-    connection->requestName(permissionsServiceName);
+  connection->requestName(permissionsServiceName);
 
-    sdbus::ObjectPath objectPath{"/com/system/permissions"};
-    PermissionsAdaptor adapter(*connection, objectPath);
+  PermissionsAdaptor adapter(*connection, objectPath);
 
-    connection->enterEventLoop();
+  connection->enterEventLoop();
 
-    return 0;
+  return 0;
 }

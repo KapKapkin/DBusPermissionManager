@@ -5,12 +5,12 @@
 
 #include "time_client_glue.h"
 
-class TimeProxy final : public sdbus::ProxyInterfaces<com::system::time_proxy>
-{
+class TimeProxy final : public sdbus::ProxyInterfaces<com::system::time_proxy> {
 public:
-    TimeProxy(sdbus::IConnection &connection, sdbus::ServiceName destination, sdbus::ObjectPath path);
+  TimeProxy(sdbus::IConnection &connection, sdbus::ServiceName destination,
+            sdbus::ObjectPath path);
 
-    ~TimeProxy();
+  ~TimeProxy();
 };
 
 #endif

@@ -13,45 +13,44 @@
 namespace com {
 namespace system {
 
-class permissions_proxy
-{
+class permissions_proxy {
 public:
-    static constexpr const char* INTERFACE_NAME = "com.system.permissions";
+  static constexpr const char *INTERFACE_NAME = "com.system.permissions";
 
 protected:
-    permissions_proxy(sdbus::IProxy& proxy)
-        : m_proxy(proxy)
-    {
-    }
+  permissions_proxy(sdbus::IProxy &proxy) : m_proxy(proxy) {}
 
-    permissions_proxy(const permissions_proxy&) = delete;
-    permissions_proxy& operator=(const permissions_proxy&) = delete;
-    permissions_proxy(permissions_proxy&&) = delete;
-    permissions_proxy& operator=(permissions_proxy&&) = delete;
+  permissions_proxy(const permissions_proxy &) = delete;
+  permissions_proxy &operator=(const permissions_proxy &) = delete;
+  permissions_proxy(permissions_proxy &&) = delete;
+  permissions_proxy &operator=(permissions_proxy &&) = delete;
 
-    ~permissions_proxy() = default;
+  ~permissions_proxy() = default;
 
-    void registerProxy()
-    {
-    }
+  void registerProxy() {}
 
 public:
-    void RequestPermission(const int32_t& permissionEnumCode)
-    {
-        m_proxy.callMethod("RequestPermission").onInterface(INTERFACE_NAME).withArguments(permissionEnumCode);
-    }
+  void RequestPermission(const int32_t &permissionEnumCode) {
+    m_proxy.callMethod("RequestPermission")
+        .onInterface(INTERFACE_NAME)
+        .withArguments(permissionEnumCode);
+  }
 
-    bool CheckApplicationHasPermission(const std::string& applicationExecPath, const int32_t& permissionEnumCode)
-    {
-        bool result;
-        m_proxy.callMethod("CheckApplicationHasPermission").onInterface(INTERFACE_NAME).withArguments(applicationExecPath, permissionEnumCode).storeResultsTo(result);
-        return result;
-    }
+  bool CheckApplicationHasPermission(const std::string &applicationExecPath,
+                                     const int32_t &permissionEnumCode) {
+    bool result;
+    m_proxy.callMethod("CheckApplicationHasPermission")
+        .onInterface(INTERFACE_NAME)
+        .withArguments(applicationExecPath, permissionEnumCode)
+        .storeResultsTo(result);
+    return result;
+  }
 
 private:
-    sdbus::IProxy& m_proxy;
+  sdbus::IProxy &m_proxy;
 };
 
-}} // namespaces
+} // namespace system
+} // namespace com
 
 #endif

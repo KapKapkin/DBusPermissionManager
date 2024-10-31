@@ -3,9 +3,6 @@
 
 #include <sdbus-c++/sdbus-c++.h>
 
-enum permissionCodeEnum
-{
-    SystemTime
-};
+enum permissionCodeEnum { SystemTime };
 
 #endif

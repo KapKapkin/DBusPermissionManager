@@ -12,3 +12,7 @@ target_link_libraries(DBusTimeService PRIVATE SDBusCpp::sdbus-c++)
 target_link_libraries(DBusTimeService PRIVATE SQLiteCpp sqlite3 pthread dl)
 
 
+target_compile_options(DBusTimeService PRIVATE
+  $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+  $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
+)

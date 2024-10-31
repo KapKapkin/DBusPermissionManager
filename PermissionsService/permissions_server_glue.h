@@ -10,47 +10,54 @@
 #include <string>
 #include <tuple>
 
-namespace com
-{
-    namespace system
-    {
+namespace com {
+namespace system {
 
-        class permissions_adaptor
-        {
-        public:
-            static constexpr const char *INTERFACE_NAME = "com.system.permissions";
+class permissions_adaptor {
+public:
+  static constexpr const char *INTERFACE_NAME = "com.system.permissions";
 
-        protected:
-            permissions_adaptor(sdbus::IObject &object)
-                : m_object(object)
-            {
-            }
+protected:
+  permissions_adaptor(sdbus::IObject &object) : m_object(object) {}
 
-            permissions_adaptor(const permissions_adaptor &) = delete;
-            permissions_adaptor &operator=(const permissions_adaptor &) = delete;
-            permissions_adaptor(permissions_adaptor &&) = delete;
-            permissions_adaptor &operator=(permissions_adaptor &&) = delete;
+  permissions_adaptor(const permissions_adaptor &) = delete;
+  permissions_adaptor &operator=(const permissions_adaptor &) = delete;
+  permissions_adaptor(permissions_adaptor &&) = delete;
+  permissions_adaptor &operator=(permissions_adaptor &&) = delete;
 
-            ~permissions_adaptor() = default;
+  ~permissions_adaptor() = default;
 
-            void registerAdaptor()
-            {
-                m_object.addVTable(sdbus::registerMethod("RequestPermission").withInputParamNames("permissionEnumCode").implementedAs([this](const int32_t &permissionEnumCode)
-                                                                                                                                      { return this->RequestPermission(permissionEnumCode); }),
-                                   sdbus::registerMethod("CheckApplicationHasPermission").withInputParamNames("applicationExecPath", "permissionEnumCode").withOutputParamNames("status").implementedAs([this](const std::string &applicationExecPath, const int32_t &permissionEnumCode)
-                                                                                                                                                                                                        { return this->CheckApplicationHasPermission(applicationExecPath, permissionEnumCode); }))
-                    .forInterface(INTERFACE_NAME);
-            }
+  void registerAdaptor() {
+    m_object
+        .addVTable(
+            sdbus::registerMethod("RequestPermission")
+                .withInputParamNames("permissionEnumCode")
+                .implementedAs([this](const int32_t &permissionEnumCode) {
+                  return this->RequestPermission(permissionEnumCode);
+                }),
+            sdbus::registerMethod("CheckApplicationHasPermission")
+                .withInputParamNames("applicationExecPath",
+                                     "permissionEnumCode")
+                .withOutputParamNames("status")
+                .implementedAs([this](const std::string &applicationExecPath,
+                                      const int32_t &permissionEnumCode) {
+                  return this->CheckApplicationHasPermission(
+                      applicationExecPath, permissionEnumCode);
+                }))
+        .forInterface(INTERFACE_NAME);
+  }
 
-        private:
-            virtual void RequestPermission(const int32_t &permissionEnumCode) = 0;
-            virtual bool CheckApplicationHasPermission(const std::string &applicationExecPath, const int32_t &permissionEnumCode) = 0;
+private:
+  virtual void RequestPermission(const int32_t &permissionEnumCode) = 0;
+  virtual bool
+  CheckApplicationHasPermission(const std::string &applicationExecPath,
+                                const int32_t &permissionEnumCode) = 0;
 
-        private:
-            sdbus::IObject &m_object;
-        };
+private:
+  sdbus::IObject &m_object;
+};
 
-    }
-} // namespaces
+} // namespace system
+} // namespace com
 
 #endif
