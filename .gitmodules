@@ -1,0 +1,6 @@
+[submodule "thirdparty/SQLiteCpp"]
+	path = thirdparty/SQLiteCpp
+	url = https://github.com/SRombauts/SQLiteCpp.git
+[submodule "thirdparty/sdbus-cpp"]
+	path = thirdparty/sdbus-cpp
+	url = https://github.com/Kistler-Group/sdbus-cpp.git
