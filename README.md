@@ -25,25 +25,21 @@
 
 ## Установка
 
-1. Убедитесь, что у вас установлены необходимые зависимости:
-   - ```gdbus```
-   - ```expat```
-
-2. Клонируйте репозиторий:
+1. Клонируйте репозиторий:
    ```
    git clone https://github.com/KapKapkin/DBusPermissionManager.git
    cd DBusPermissionManager
    ```
    
 
-3. Соберите проект:
+2. Соберите проект:
    ```
    mkdir build && cd build
    cmake ..
    make
    ```
 
-4. Запустите сервисы:
+3. Запустите сервисы:
    ```
    # В одном терминале запустите сервис com.system.permissions
    ./PermissionsService/DBusPermissionService 
@@ -52,7 +48,7 @@
    ./TimeService/DBusTimeService 
    ```
 
-5. Запустите клиентское приложение:
+4. Запустите клиентское приложение:
    ```
    ./TimeRequester/DBusTimeRequester
    ```
