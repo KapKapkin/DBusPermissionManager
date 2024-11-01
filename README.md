@@ -6,14 +6,14 @@
 
 ### Сервисы
 
-1. com.system.permissions
+1. ```com.system.permissions```
    - Методы:
-     - void RequestPermission(int permissionEnumCode): Запрашивает разрешение для исполняемого файла и сохраняет информацию в базе данных SQLite.
-     - bool CheckApplicationHasPermission(String applicationExecPath, int permissionEnumCode): Проверяет, имеет ли исполняемый файл заданное разрешение.
+     - ```void RequestPermission(int permissionEnumCode)```: Запрашивает разрешение для исполняемого файла и сохраняет информацию в базе данных SQLite.
+     - ```bool CheckApplicationHasPermission(String applicationExecPath, int permissionEnumCode)```: Проверяет, имеет ли исполняемый файл заданное разрешение.
 
-2. com.system.time
+2. ```com.system.time```
    - Методы:
-     - uint64 GetSystemTime(): Возвращает текущую метку времени, проверяя наличие у клиента разрешения SystemTime.
+     - ```uint64 GetSystemTime()```: Возвращает текущую метку времени, проверяя наличие у клиента разрешения SystemTime.
 
 ### Клиентское приложение
 
@@ -26,54 +26,55 @@
 ## Установка
 
 1. Убедитесь, что у вас установлены необходимые зависимости:
-   - gdbus
-   - expat
+   - ```gdbus```
+   - ```expat```
 
 2. Клонируйте репозиторий:
-   
+   ```
    git clone https://github.com/KapKapkin/DBusPermissionManager.git
    cd DBusPermissionManager
+   ```
    
 
-3. Постройте проект:
-   
+3. Соберите проект:
+   ```
    mkdir build && cd build
    cmake ..
    make
-   
+   ```
 
 4. Запустите сервисы:
-   
+   ```
    # В одном терминале запустите сервис com.system.permissions
    ./PermissionsService/DBusPermissionService 
 
    # В другом терминале запустите сервис com.system.time
    ./TimeService/DBusTimeService 
-   
+   ```
 
 5. Запустите клиентское приложение:
-   
+   ```
    ./TimeRequester/DBusTimeRequester
-   
+   ```
 
 ## Примеры использования
 
 ### Запрос разрешения
 
-Используйте gdbus для отправки сообщений на сервис:
-
+Используйте ```gdbus``` для отправки сообщений на сервис:
+```
 gdbus call -e -d com.system.permissions -o /com/system/permissions -m com.system.permissions.RequestPermission 0
-
+```
 
 ### Проверка разрешения
-
+```
 gdbus call -e -d com.system.permissions -o /com/system/permissions -m com.system.permissions.CheckApplicationHasPermission /usr/bin/com.example.example 0
-
+```
 
 ### Получение системного времени
-
+```
 gdbus call -e -d com.system.time -o /com/system/time -m com.system.time.GetSystemTime
-
+```
 
 ## Ошибки
 
