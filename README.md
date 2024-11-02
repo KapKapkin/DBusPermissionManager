@@ -25,10 +25,12 @@
 
 ## Установка
 
-1. Клонируйте репозиторий:
+1. Клонируйте репозиторий и подгрузите подмодули:
    ```
    git clone https://github.com/KapKapkin/DBusPermissionManager.git
    cd DBusPermissionManager
+   git submodule init
+   git submodule update
    ```
    
 
